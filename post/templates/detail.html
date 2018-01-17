@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block header %}
+
+	Detail
+	 
+{% endblock header %}
+
+{% block content %}
+
+
+	<font color="red"><h2>{{title.title}}</h2></font>
+
+			{% if title.photo %}
+
+				<img class="card-image-top" src="{{title.photo.url}}" alt="Article image">
+
+			{% endif %}
+
+			<h5 class="card-title">{{item.title}}</h5>
+
+	<h5>{{title.content}}</h5>
+
+	{{title.created}}
+	
+	{{title.updated}}
+
+	<button class = "btn" onclick="like_button()">
+		<!-- <div>{{count}}</div> -->
+
+		<div id="like-count">{{count}}</div> <!-- 0</div> -->
+		<i id="like-heart" class="fa fa-heartbeat {% if liked %}text-danger{% endif %}" aria-hidden="true"></i>
+	</button>
+
+
+<!-- ****************************COMMENTS******************************* -->
+
+
+<p class="card-text">
+	{% for comment in comments %}
+		<div class="alert alert-primary">({{comment.timestamp}}){{comment.user}}: {{comment.com|linebreaks}}</div>
+	{% endfor %}
+
+	</p>
+	<p class-"card-text">
+
+		<form action="{% url 'detail' post_id=title.id %}" method="POST">
+			{% csrf_token %}
+			{{form|crispy}}
+
+			<input type="submit" class = "btn btn-primary" value = "Submit" >
+		</form>
+	</p>
+
+
+<!-- ****************************_-_-_******************************* -->
+
+
+
+<script>
+	function like_button(){
+		$.ajax({
+			type: "GET",
+			url: "{% url 'likes' post_id=title.id %}",
+			error: function(){
+				alert("HAHAHAHW WRONG");
+			},
+			success: function(data)
+			{
+				$("#like-count").text(data.count);
+				if(data.action==="like"){
+					$("#like-heart").addClass("text-danger");
+				}
+				else
+				{
+					$("#like-heart").removeClass("text-danger");
+				}
+			},
+		});
+	}
+
+</script>
+
+{% endblock content %}
+
+
+
+
+
