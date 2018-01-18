@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('post.urls')),
+    path('googleyo/', include('googleyo.urls')),
 
 ]
 

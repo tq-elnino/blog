@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	
+
+
+		
+
+				<div class="card">
+		  <div class="card-header">
+		    {{place.result.name}}
+		  </div>
+		  <div class="card-body">
+
+		    <h5 class="card-title">This joint's Address: {{place.result.formatted_address}}</h5>
+
+		    <p class="card-text">This joint's International Number: {{place.result.international_phone_number}}</p>
+		    <p class="card-text">This joint's Lat: {{place.result.geometry.location.lat}}</p>
+		    <p class="card-text">This joint's Lng: {{place.result.geometry.location.lng}}</p>
+		    
+
+		    </form>
+
+		  </div>
+		</div>
+
+
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyArET9d473SiVKnvAJdX1iqWIilcCehPVs&q={{place.result.geometry.location.lat}},{{place.result.geometry.location.lng}}". allowfullscreen>
+</iframe>
+
+
+
+{% endblock content %}

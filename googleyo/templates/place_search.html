@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	{% for place in response.results %}
+
+
+				<div class="card">
+		  <div class="card-header">
+		    {{place.name}}
+		  </div>
+		  <div class="card-body">
+
+		    <h5 class="card-title">This joint's Address: {{place.formatted_address}}</h5>
+
+		    <p class="card-text">This joint's Rating: {{place.rating}}</p>
+
+		    <!-- <a href="#" class="btn btn-warning">This Joint's Details</a> -->
+		    <form action="{% url 'place_detail' %}" method = "GET">
+		    	<input type="hidden" name="place_id" value="{{place.place_id}}">
+		    	<input type="submit" value="This Joint's Details" class="btn btn-warning">
+		    </form>
+
+		  </div>
+		</div>
+
+
+
+	{% endfor endblock content %}
+
+	{% if response.next_page_token %}
+	<form action="{% url 'place_search' %}" method="GET">
+		<input type="hidden" name="next_page" value="{{response.next_page_token}}">
+		<input type="submit" value="Next Page">
+	</form>
+
+	{% endif %}
+
+{% endblock content %}
+	
